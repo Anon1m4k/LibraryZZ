@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Добавление_записи_на_читателя.cs" />
+    <Compile Include="Взятие_или_возврат_книги.cs" />
     <Compile Include="Записанная_книга.cs" />
     <Compile Include="Запись_CSV_файла.cs" />
     <Compile Include="Program.cs" />

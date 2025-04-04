@@ -35,8 +35,7 @@ namespace Зимнее_задание
         public void Поиск_по_букве()
         {
             Console.Write("Введите букву для поиска: ");
-            char буква = Console.ReadKey().KeyChar;
-            Console.ReadKey(); //=)
+            string буква = Console.ReadLine();
             var найденные_книги = книги.Where(b => b.Название.StartsWith(буква.ToString(), StringComparison.OrdinalIgnoreCase)).ToList();
 
             if (найденные_книги.Any())
