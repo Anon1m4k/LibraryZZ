@@ -23,6 +23,12 @@ namespace Зимнее_задание
 
             if (книга != null)
             {
+                if (!string.IsNullOrEmpty(книга.Записано_за))
+                {
+                    Console.WriteLine($"Книга уже взята: {книга.Записано_за}.");
+                    return;
+                }
+
                 Console.Write("Введите ФИО человека, который взял книгу: ");
                 книга.Записано_за = Console.ReadLine();
                 записьCSV.Добавить_в_CSV(книга, false);
