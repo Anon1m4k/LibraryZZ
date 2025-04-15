@@ -32,9 +32,9 @@ namespace Зимнее_задание
                 Console.WriteLine("Книги не найдены.");
             }
         }
-        public void Поиск_по_букве()
+        public void Поиск_по_названию()
         {
-            Console.Write("Введите букву для поиска: ");
+            Console.Write("Введите название или букву для поиска: ");
             string буква = Console.ReadLine();
             var найденные_книги = книги.Where(b => b.Название.StartsWith(буква.ToString(), StringComparison.OrdinalIgnoreCase)).ToList();
 
