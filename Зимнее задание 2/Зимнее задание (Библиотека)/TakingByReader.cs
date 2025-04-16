@@ -37,7 +37,7 @@ namespace Зимнее_задание__Библиотека_
 
             int index = books.IndexOf(book);
             books[index] = takenBook;
-            Console.WriteLine("Книга успешно записана на читателя.");
+            Console.WriteLine($"Книга '{book.Title}' записана за '{holderName}'.");
         }
 
         public static void ReturnBook(List<Book> books, int bookId)

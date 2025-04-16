@@ -21,7 +21,7 @@ namespace Зимнее_задание__Библиотека_
         {
             while (true)
             {
-                Console.WriteLine("1. Добавить книгу\n2. Удалить книгу\n3. Поиск по автору\n4. Поиск по названию\n5. Записать книгу\n6. Вернуть книгу\n7. Выход");
+                Console.WriteLine("1. Добавить книгу\n2. Удалить книгу\n3. Поиск по автору\n4. Поиск по названию или частичному совпадению\n5. Записать книгу\n6. Вернуть книгу\n7. Выход");
                 var choice = Console.ReadLine();
 
                 switch (choice)
@@ -39,13 +39,19 @@ namespace Зимнее_задание__Библиотека_
         }
         private void AddBook()
         {
-            Console.WriteLine("Введите название, автора, издательство, год, количество экземпляров:");
+            Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
             var title = Console.ReadLine();
             var author = Console.ReadLine();
             var publisher = Console.ReadLine();
             if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
             {
-                Console.WriteLine("Год и количество экземпляров должны вводиться числами.");
+                Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
+                return;
+            }
+
+            if (year <= 0 || count <= 0)
+            {
+                Console.WriteLine("Год издания и количество экземпляров должны больше нуля.");
                 return;
             }
 
@@ -76,6 +82,12 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
+            if (id <= 0)
+            {
+                Console.WriteLine("ID должно быть больше нуля.");
+                return;
+            }
+
             var book = books.FirstOrDefault(b => b.Id == id);
 
             if (book == null)
@@ -103,14 +115,22 @@ namespace Зимнее_задание__Библиотека_
         private void TakeBook()
         {
             Console.WriteLine("Введите ID книги и ФИО:");
-            if (!int.TryParse(Console.ReadLine(), out int id)) return;
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("ID должно вводиться числом.");
+                return;
+            }
             TakingByReader.TakeBook(books, id, Console.ReadLine());
         }
 
         private void ReturnBook()
         {
             Console.WriteLine("Введите ID книги:");
-            if (!int.TryParse(Console.ReadLine(), out int id)) return;
+            if (!int.TryParse(Console.ReadLine(), out int id))
+            {
+                Console.WriteLine("ID должно вводиться числом.");
+                return;
+            }
             TakingByReader.ReturnBook(books, id);
         }
     }
