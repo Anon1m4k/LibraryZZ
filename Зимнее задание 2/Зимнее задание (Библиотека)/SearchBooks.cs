@@ -10,7 +10,7 @@ namespace Зимнее_задание__Библиотека_
     {
         public static void SearchByAuthor(List<Book> books, string author)
         {
-            var foundBooks = books.Where(b =>b.Author.Contains(author));
+            var foundBooks = books.Where(b => b.Author.Contains(author)).ToList();
             PrintBooks(foundBooks);
             if (foundBooks.Count() == 0)
             {
@@ -28,7 +28,7 @@ namespace Зимнее_задание__Библиотека_
             }
         }
 
-        private static void PrintBooks(IEnumerable<Book> books)
+        private static void PrintBooks(List<Book> books)
         {
             foreach (var book in books)
             {

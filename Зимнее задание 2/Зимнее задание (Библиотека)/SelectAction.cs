@@ -9,12 +9,14 @@ namespace Зимнее_задание__Библиотека_
     public class SelectAction
     {
         private List<Book> books;
+        private Library _library;
         private string filePath = "library.csv";
-        private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
+      //  private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
 
         public SelectAction()
         {
             books = ActionWithCSVFile.LoadBooks(filePath);
+            _library = new Library(books);
         }
 
         public void Start()
@@ -37,12 +39,14 @@ namespace Зимнее_задание__Библиотека_
                 }
             }
         }
+       //###########################################################################
         private void AddBook()
         {
             Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
             var title = Console.ReadLine();
             var author = Console.ReadLine();
             var publisher = Console.ReadLine();
+
             if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
             {
                 Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
@@ -55,19 +59,7 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
-            int nextId = GetNextId();
-            for (int i = 0; i < count; i++)
-            {
-                books.Add(new Book
-                {
-                    Id = nextId + i,
-                    Title = title,
-                    Author = author,
-                    Publisher = publisher,
-                    Year = year
-                });
-            }
-
+            _library.AddBook(title, author, publisher, year, count);
             Console.WriteLine($"Добавлено {count} экземпляров книги.");
         }
 
@@ -96,7 +88,7 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
-            books.Remove(book);
+            _library.DeleteBook(book);
             Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
         }
 
@@ -135,3 +127,67 @@ namespace Зимнее_задание__Библиотека_
         }
     }
 }
+
+/*private void AddBook()
+       {
+           Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
+           var title = Console.ReadLine();
+           var author = Console.ReadLine();
+           var publisher = Console.ReadLine();
+           if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
+           {
+               Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
+               return;
+           }
+
+           if (year <= 0 || count <= 0)
+           {
+               Console.WriteLine("Год издания и количество экземпляров должны больше нуля.");
+               return;
+           }
+
+           int nextId = GetNextId();
+           for (int i = 0; i < count; i++)
+           {
+               books.Add(new Book
+               {
+                   Id = nextId + i,
+                   Title = title,
+                   Author = author,
+                   Publisher = publisher,
+                   Year = year
+               });
+           }
+
+           Console.WriteLine($"Добавлено {count} экземпляров книги.");
+       }*/
+
+
+/* private void DeleteBook()
+ {
+     Console.WriteLine("Введите ID книги для удаления:");
+     string input = Console.ReadLine();
+
+     if (!int.TryParse(input, out int id))
+     {
+         Console.WriteLine("ID должно вводиться числом.");
+         return;
+     }
+
+     if (id <= 0)
+     {
+         Console.WriteLine("ID должно быть больше нуля.");
+         return;
+     }
+
+     var book = books.FirstOrDefault(b => b.Id == id);
+
+     if (book == null)
+     {
+         Console.WriteLine("Книга не найдена.");
+         return;
+     }
+
+     books.Remove(book);
+     Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
+ }*/

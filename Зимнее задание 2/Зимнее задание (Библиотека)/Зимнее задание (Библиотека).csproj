@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="ActionWithCSVFile.cs" />
     <Compile Include="Book.cs" />
+    <Compile Include="Library.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchBooks.cs" />
