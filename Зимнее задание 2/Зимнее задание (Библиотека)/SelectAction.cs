@@ -11,10 +11,12 @@ namespace Зимнее_задание__Библиотека_
         private List<Book> books;
         private string filePath = "library.csv";
         private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
+        private Library _library;
 
         public SelectAction()
         {
             books = ActionWithCSVFile.LoadBooks(filePath);
+            _library = new Library(books);
         }
 
         public void Start()
@@ -37,7 +39,7 @@ namespace Зимнее_задание__Библиотека_
                 }
             }
         }
-        private void AddBook()
+       /* private void AddBook()
         {
             Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
             var title = Console.ReadLine();
@@ -69,7 +71,8 @@ namespace Зимнее_задание__Библиотека_
             }
 
             Console.WriteLine($"Добавлено {count} экземпляров книги.");
-        }
+        }*/
+
 
         private void DeleteBook()
         {
@@ -98,6 +101,53 @@ namespace Зимнее_задание__Библиотека_
 
             books.Remove(book);
             Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
+        }
+        private void AddBook()
+        {
+            Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
+            var title = Console.ReadLine();
+            var author = Console.ReadLine();
+            var publisher = Console.ReadLine();
+            var inputYear = Console.ReadLine();
+            var inputCount = Console.ReadLine();
+
+            if (!Library.TryParseBookParameters(inputYear, inputCount, out int year, out int count))
+            {
+                Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
+                return;
+            }
+
+            try
+            {
+                _library.AddBook(title, author, publisher, year, count);
+                Console.WriteLine($"Добавлено {count} экземпляров книги.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+        }
+
+        private void DeleteBook()
+        {
+            Console.WriteLine("Введите ID книги для удаления:");
+            var input = Console.ReadLine();
+
+            if (!int.TryParse(input, out int id))
+            {
+                Console.WriteLine("ID должно вводиться числом.");
+                return;
+            }
+
+            try
+            {
+                _library.DeleteBook(id);
+                Console.WriteLine($"Книга (ID: {id}) удалена.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
         }
 
         private void SearchByAuthor()
