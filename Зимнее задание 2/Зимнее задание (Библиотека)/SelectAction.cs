@@ -8,14 +8,14 @@ namespace Зимнее_задание__Библиотека_
 {
     public class SelectAction
     {
-        private List<Book> books;
+       // private List<Book> books;
         private Library _library;
-        private string filePath = "library.csv";
+
       //  private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
 
         public SelectAction()
         {
-            books = ActionWithCSVFile.LoadBooks(filePath);
+            var books = ActionWithCSVFile.LoadBooks(_library.GetFilePath());
             _library = new Library(books);
         }
 
@@ -34,7 +34,7 @@ namespace Зимнее_задание__Библиотека_
                     case "4": SearchByTitle(); break;
                     case "5": TakeBook(); break;
                     case "6": ReturnBook(); break;
-                    case "7": ActionWithCSVFile.SaveBooks(filePath, books); return;
+                    case "7": ActionWithCSVFile.SaveBooks(_library.GetFilePath(), _library.GetAllBooks()); return;
                     default: Console.WriteLine("Неверный выбор."); break;
                 }
             }
@@ -80,7 +80,7 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
-            var book = books.FirstOrDefault(b => b.Id == id);
+            var book = _library.GetAllBooks().FirstOrDefault(b => b.Id == id);
 
             if (book == null)
             {
@@ -95,13 +95,13 @@ namespace Зимнее_задание__Библиотека_
         private void SearchByAuthor()
         {
             Console.WriteLine("Введите автора:");
-            SearchBooks.SearchByAuthor(books, Console.ReadLine());
+            SearchBooks.SearchByAuthor(_library.GetAllBooks(), Console.ReadLine());
         }
 
         private void SearchByTitle()
         {
             Console.WriteLine("Введите название:");
-            SearchBooks.SearchByTitle(books, Console.ReadLine());
+            SearchBooks.SearchByTitle(_library.GetAllBooks(), Console.ReadLine());
         }
 
         private void TakeBook()
@@ -112,7 +112,7 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("ID должно вводиться числом.");
                 return;
             }
-            TakingByReader.TakeBook(books, id, Console.ReadLine());
+            TakingByReader.TakeBook(_library.GetAllBooks(), id, Console.ReadLine());
         }
 
         private void ReturnBook()
@@ -123,7 +123,7 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("ID должно вводиться числом.");
                 return;
             }
-            TakingByReader.ReturnBook(books, id);
+            TakingByReader.ReturnBook(_library.GetAllBooks(), id);
         }
     }
 }
