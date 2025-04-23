@@ -8,7 +8,7 @@ namespace Зимнее_задание__Библиотека_
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             new SelectAction().Start();
         }

@@ -10,7 +10,7 @@ namespace Зимнее_задание__Библиотека_
     {
         public static void TakeBook(List<Book> books, int bookId, string holderName)
         {
-            var book = books.FirstOrDefault(b => b.Id == bookId);
+            Book book = books.FirstOrDefault(b => b.Id == bookId);
             if (book == null)
             {
                 Console.WriteLine("Книга не найдена.");
@@ -19,11 +19,11 @@ namespace Зимнее_задание__Библиотека_
 
             if (book is TakenBook)
             {
-                Console.WriteLine("Книга уже взята.");
+                Console.WriteLine($"Книга уже взята'{holderName}'.");
                 return;
             }
 
-            var takenBook = new TakenBook
+            TakenBook takenBook = new TakenBook
             {
                 Id = book.Id,
                 Title = book.Title,
@@ -42,14 +42,14 @@ namespace Зимнее_задание__Библиотека_
 
         public static void ReturnBook(List<Book> books, int bookId)
         {
-            var takenBook = books.OfType<TakenBook>().FirstOrDefault(b => b.Id == bookId);
+            TakenBook takenBook = books.OfType<TakenBook>().FirstOrDefault(b => b.Id == bookId);
             if (takenBook == null)
             {
                 Console.WriteLine("Книга не найдена или не была взята.");
                 return;
             }
 
-            var book = new Book
+            Book book = new Book
             {
                 Id = takenBook.Id,
                 Title = takenBook.Title,

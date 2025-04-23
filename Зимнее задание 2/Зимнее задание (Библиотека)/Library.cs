@@ -8,15 +8,14 @@ namespace Зимнее_задание__Библиотека_
 {
     public class Library
     {
-        private string _filePath = "library.csv";
-
         private List<Book> _books;
+        private const string _filePath = "library.csv";
 
-        public Library(List<Book> books)
+        public Library()
         {
-            _books = books;
+            _books = ActionWithCSVFile.LoadBooks(_filePath);
         }
-      
+
         public void AddBook(string title, string author, string publisher, int year, int count)
         {
             int nextId = _books.Count > 0 ? _books.Max(b => b.Id) + 1 : 1;
@@ -33,9 +32,17 @@ namespace Зимнее_задание__Библиотека_
             }
         }
 
-        public void DeleteBook(Book book)
+        public void DeleteBook(int id)
         {
+            Book book = _books.FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                Console.WriteLine("Книга не найдена.");
+                return;
+            }
             _books.Remove(book);
+            Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
         }
 
         public List<Book> GetAllBooks()

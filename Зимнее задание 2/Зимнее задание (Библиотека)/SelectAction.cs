@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,23 +9,14 @@ namespace Зимнее_задание__Библиотека_
 {
     public class SelectAction
     {
-       // private List<Book> books;
-        private Library _library;
-
-      //  private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
-
-        public SelectAction()
-        {
-            var books = ActionWithCSVFile.LoadBooks(_library.GetFilePath());
-            _library = new Library(books);
-        }
+        private Library _library = new Library();
 
         public void Start()
         {
             while (true)
             {
                 Console.WriteLine("1. Добавить книгу\n2. Удалить книгу\n3. Поиск по автору\n4. Поиск по названию или частичному совпадению\n5. Записать книгу\n6. Вернуть книгу\n7. Выход");
-                var choice = Console.ReadLine();
+                string choice = Console.ReadLine();
 
                 switch (choice)
                 {
@@ -39,13 +31,13 @@ namespace Зимнее_задание__Библиотека_
                 }
             }
         }
-       //###########################################################################
+
         private void AddBook()
         {
             Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
-            var title = Console.ReadLine();
-            var author = Console.ReadLine();
-            var publisher = Console.ReadLine();
+            string title = Console.ReadLine();
+            string author = Console.ReadLine();
+            string publisher = Console.ReadLine();
 
             if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
             {
@@ -80,22 +72,20 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
-            var book = _library.GetAllBooks().FirstOrDefault(b => b.Id == id);
-
-            if (book == null)
-            {
-                Console.WriteLine("Книга не найдена.");
-                return;
-            }
-
-            _library.DeleteBook(book);
-            Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
+            _library.DeleteBook(id);
         }
 
         private void SearchByAuthor()
         {
             Console.WriteLine("Введите автора:");
-            SearchBooks.SearchByAuthor(_library.GetAllBooks(), Console.ReadLine());
+            string author = Console.ReadLine();
+
+            if (author == "")
+            {
+                Console.WriteLine("Введён пустой автор.");
+                return;
+            }
+            SearchBooks.SearchByAuthor(_library.GetAllBooks(), author);
         }
 
         private void SearchByTitle()
@@ -112,6 +102,11 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("ID должно вводиться числом.");
                 return;
             }
+            if (id <= 0)
+            {
+                Console.WriteLine("ID должно быть больше нуля.");
+                return;
+            }
             TakingByReader.TakeBook(_library.GetAllBooks(), id, Console.ReadLine());
         }
 
@@ -123,71 +118,12 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("ID должно вводиться числом.");
                 return;
             }
+            if (id <= 0)
+            {
+                Console.WriteLine("ID должно быть больше нуля.");
+                return;
+            }
             TakingByReader.ReturnBook(_library.GetAllBooks(), id);
         }
     }
 }
-
-/*private void AddBook()
-       {
-           Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
-           var title = Console.ReadLine();
-           var author = Console.ReadLine();
-           var publisher = Console.ReadLine();
-           if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
-           {
-               Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
-               return;
-           }
-
-           if (year <= 0 || count <= 0)
-           {
-               Console.WriteLine("Год издания и количество экземпляров должны больше нуля.");
-               return;
-           }
-
-           int nextId = GetNextId();
-           for (int i = 0; i < count; i++)
-           {
-               books.Add(new Book
-               {
-                   Id = nextId + i,
-                   Title = title,
-                   Author = author,
-                   Publisher = publisher,
-                   Year = year
-               });
-           }
-
-           Console.WriteLine($"Добавлено {count} экземпляров книги.");
-       }*/
-
-
-/* private void DeleteBook()
- {
-     Console.WriteLine("Введите ID книги для удаления:");
-     string input = Console.ReadLine();
-
-     if (!int.TryParse(input, out int id))
-     {
-         Console.WriteLine("ID должно вводиться числом.");
-         return;
-     }
-
-     if (id <= 0)
-     {
-         Console.WriteLine("ID должно быть больше нуля.");
-         return;
-     }
-
-     var book = books.FirstOrDefault(b => b.Id == id);
-
-     if (book == null)
-     {
-         Console.WriteLine("Книга не найдена.");
-         return;
-     }
-
-     books.Remove(book);
-     Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
- }*/

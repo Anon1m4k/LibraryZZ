@@ -12,14 +12,17 @@ namespace Зимнее_задание__Библиотека_
         public static List<Book> LoadBooks(string filePath)
         {
             List<Book> books = new List<Book>();
-            if (!File.Exists(filePath)) return books;
+            if (!File.Exists(filePath))
+            {
+                return books;
+            }
 
-            foreach (var line in File.ReadAllLines(filePath).Skip(1))
+            foreach (string line in File.ReadAllLines(filePath).Skip(1))
             {
                 string[] parts = line.Split(',');
                 if (parts.Length < 8) continue;
 
-                var book = ParseBook(parts);
+                Book book = ParseBook(parts);
                 books.Add(book);
             }
 
@@ -62,9 +65,9 @@ namespace Зимнее_задание__Библиотека_
 
         public static void SaveBooks(string filePath, List<Book> books)
         {
-            var lines = new List<string> { "Id,Title,Author,Publisher,Year,HolderName,CheckoutDate,DueDate" };
+            List<string> lines = new List<string> { "Id,Title,Author,Publisher,Year,HolderName,CheckoutDate,DueDate" };
 
-            foreach (var book in books)
+            foreach (Book book in books)
             {
                 if (book is TakenBook takenBook)
                 {
@@ -82,7 +85,7 @@ namespace Зимнее_задание__Библиотека_
                 }
             }
 
-            File.WriteAllLines(filePath, lines);
+            File.WriteAllLines(filePath, lines, Encoding.UTF8);
         }
     }
 }

@@ -161,3 +161,103 @@ public class Взятие_или_возврат_книги
                Console.WriteLine("Книга не найдена.");
            }
        }*/
+
+############################################################################################
+    public class SelectAction
+
+// private List<Book> books;
+
+//  private Library _library;
+
+//  private int GetNextId() => books.Count > 0 ? books.Max(b => b.Id) + 1 : 1;
+
+/*public SelectAction()
+{
+    _library = new Library(new List<Book>());
+    var books = ActionWithCSVFile.LoadBooks(_library.GetFilePath());
+    _library = new Library(books);
+}*/
+
+/*private void AddBook()
+       {
+           Console.WriteLine("Введите название, автора, издательство, год издания, количество экземпляров:");
+           var title = Console.ReadLine();
+           var author = Console.ReadLine();
+           var publisher = Console.ReadLine();
+           if (!int.TryParse(Console.ReadLine(), out int year) || !int.TryParse(Console.ReadLine(), out int count))
+           {
+               Console.WriteLine("Год издания и количество экземпляров должны вводиться числами.");
+               return;
+           }
+
+           if (year <= 0 || count <= 0)
+           {
+               Console.WriteLine("Год издания и количество экземпляров должны больше нуля.");
+               return;
+           }
+
+           int nextId = GetNextId();
+           for (int i = 0; i < count; i++)
+           {
+               books.Add(new Book
+               {
+                   Id = nextId + i,
+                   Title = title,
+                   Author = author,
+                   Publisher = publisher,
+                   Year = year
+               });
+           }
+
+           Console.WriteLine($"Добавлено {count} экземпляров книги.");
+       }*/
+
+
+/* private void DeleteBook()
+ {
+     Console.WriteLine("Введите ID книги для удаления:");
+     string input = Console.ReadLine();
+
+     if (!int.TryParse(input, out int id))
+     {
+         Console.WriteLine("ID должно вводиться числом.");
+         return;
+     }
+
+     if (id <= 0)
+     {
+         Console.WriteLine("ID должно быть больше нуля.");
+         return;
+     }
+
+     var book = books.FirstOrDefault(b => b.Id == id);
+
+     if (book == null)
+     {
+         Console.WriteLine("Книга не найдена.");
+         return;
+     }
+
+     books.Remove(book);
+     Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
+ }*/
+
+
+############################################################################################
+
+    public class Library
+
+
+/*public Library(List<Book> books)
+ {
+     _books = books;
+ }*/
+
+/* public void DeleteBook(int id)
+ {
+     var book = _books.FirstOrDefault(b => b.Id == id);
+     if (book != null)
+     {
+         _books.Remove(book);
+     }
+ }*/

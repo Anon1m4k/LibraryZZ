@@ -10,27 +10,31 @@ namespace Зимнее_задание__Библиотека_
     {
         public static void SearchByAuthor(List<Book> books, string author)
         {
-            var foundBooks = books.Where(b => b.Author.Contains(author)).ToList();
-            PrintBooks(foundBooks);
+            List<Book> foundBooks = books.Where(b => b.Author.Contains(author)).ToList();
+
             if (foundBooks.Count() == 0)
             {
-                Console.WriteLine("Книги не найдены.");  
-            }
+                Console.WriteLine("Книги не найдены.");
+                return;
+            } 
+            PrintBooks(foundBooks);
         }
 
         public static void SearchByTitle(List<Book> books, string title)
         {
-            var foundBooks = books.Where(b => b.Title.Contains(title)).ToList();
-            PrintBooks(foundBooks);
+            List<Book> foundBooks = books.Where(b => b.Title.Contains(title)).ToList();
+
             if (foundBooks.Count() == 0)
             {
                 Console.WriteLine("Книги не найдены.");
+                return;
             }
+            PrintBooks(foundBooks);
         }
 
         private static void PrintBooks(List<Book> books)
         {
-            foreach (var book in books)
+            foreach (Book book in books)
             {
                 Console.WriteLine($"ID: {book.Id} | {book.Title} - {book.Author} | " +
                                   $"{book.Publisher} ({book.Year})");
