@@ -32,17 +32,22 @@ namespace Зимнее_задание__Библиотека_
             }
         }
 
-        public void DeleteBook(int id)
+        public Book DeleteBook(Book book)
         {
-            Book book = _books.FirstOrDefault(b => b.Id == id);
-
-            if (book == null)
-            {
-                Console.WriteLine("Книга не найдена.");
-                return;
-            }
             _books.Remove(book);
-            Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
+            return book;
+        }
+
+        public List<Book> SearchByAuthor(List<Book> books, string author)
+        {
+            List<Book> foundBooks = books.Where(b => b.Author.Contains(author)).ToList();
+            return foundBooks;
+        }
+
+        public List<Book> SearchByTitle(List<Book> books, string title)
+        {
+            List<Book> foundBooks = books.Where(b => b.Title.Contains(title)).ToList();
+            return foundBooks;
         }
 
         public List<Book> GetAllBooks()

@@ -48,7 +48,6 @@
     <Compile Include="Library.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SearchBooks.cs" />
     <Compile Include="SelectAction.cs" />
     <Compile Include="TakenBook.cs" />
     <Compile Include="TakingByReader.cs" />

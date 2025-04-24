@@ -72,7 +72,17 @@ namespace Зимнее_задание__Библиотека_
                 return;
             }
 
-            _library.DeleteBook(id);
+            Book book = _library.GetAllBooks().FirstOrDefault(b => b.Id == id);
+
+            if (book == null)
+            {
+                Console.WriteLine("Книга не найдена.");
+                return;
+            }
+
+            _library.DeleteBook(book);
+
+            Console.WriteLine($"Книга '{book.Title}' (ID: {id}) удалена.");
         }
 
         private void SearchByAuthor()
@@ -85,13 +95,45 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("Введён пустой автор.");
                 return;
             }
-            SearchBooks.SearchByAuthor(_library.GetAllBooks(), author);
+
+            List<Book> foundBooks = _library.SearchByAuthor(_library.GetAllBooks(), author);
+
+            if (foundBooks.Count() == 0)
+            {
+                Console.WriteLine("Книги не найдены.");
+                return;
+            }
+            PrintBooks(foundBooks);
         }
 
         private void SearchByTitle()
         {
             Console.WriteLine("Введите название:");
-            SearchBooks.SearchByTitle(_library.GetAllBooks(), Console.ReadLine());
+            string name = Console.ReadLine();
+
+            List<Book> foundBooks = _library.SearchByTitle(_library.GetAllBooks(), name);
+
+            if (foundBooks.Count() == 0)
+            {
+                Console.WriteLine("Книги не найдены.");
+            }
+            PrintBooks(foundBooks);
+        }
+
+        public void PrintBooks(List<Book> books)
+        {
+            foreach (Book book in books)
+            {
+                Console.WriteLine($"ID: {book.Id} | {book.Title} - {book.Author} | " +
+                                  $"{book.Publisher} ({book.Year})");
+
+                if (book is TakenBook takenBook)
+                {
+                    Console.WriteLine($" На руках у: {takenBook.HolderName} | " +
+                                    $"Взята: {takenBook.CheckoutDate:dd.MM.yyyy} | " +
+                                    $"Вернуть до: {takenBook.DueDate:dd.MM.yyyy}");
+                }
+            }
         }
 
         private void TakeBook()
