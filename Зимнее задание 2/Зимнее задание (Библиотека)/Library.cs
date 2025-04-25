@@ -32,10 +32,9 @@ namespace Зимнее_задание__Библиотека_
             }
         }
 
-        public Book DeleteBook(Book book)
+        public void DeleteBook(Book book)
         {
             _books.Remove(book);
-            return book;
         }
 
         public List<Book> SearchByAuthor(List<Book> books, string author)

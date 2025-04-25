@@ -29,6 +29,31 @@ namespace Зимнее_задание__Библиотека_
             return books;
         }
 
+        public static void SaveBooks(string filePath, List<Book> books)
+        {
+            List<string> lines = new List<string> { "Id,Title,Author,Publisher,Year,HolderName,CheckoutDate,DueDate" };
+
+            foreach (Book book in books)
+            {
+                if (book is TakenBook takenBook)
+                {
+                    lines.Add($"{takenBook.Id},{takenBook.Title}," +
+                              $"{takenBook.Author},{takenBook.Publisher}," +
+                              $"{takenBook.Year},{takenBook.HolderName}," +
+                              $"{takenBook.CheckoutDate:yyyy-MM-dd}," +
+                              $"{takenBook.DueDate:yyyy-MM-dd}");
+                }
+                else
+                {
+                    lines.Add($"{book.Id},{book.Title}," +
+                              $"{book.Author},{book.Publisher}," +
+                              $"{book.Year},,,");
+                }
+            }
+
+            File.WriteAllLines(filePath, lines, Encoding.UTF8);
+        }
+
         private static Book ParseBook(string[] parts)
         {
             int id = int.Parse(parts[0]);
@@ -61,31 +86,6 @@ namespace Зимнее_задание__Библиотека_
                 Publisher = publisher,
                 Year = year
             };
-        }
-
-        public static void SaveBooks(string filePath, List<Book> books)
-        {
-            List<string> lines = new List<string> { "Id,Title,Author,Publisher,Year,HolderName,CheckoutDate,DueDate" };
-
-            foreach (Book book in books)
-            {
-                if (book is TakenBook takenBook)
-                {
-                    lines.Add($"{takenBook.Id},{takenBook.Title}," +
-                              $"{takenBook.Author},{takenBook.Publisher}," +
-                              $"{takenBook.Year},{takenBook.HolderName}," +
-                              $"{takenBook.CheckoutDate:yyyy-MM-dd}," +
-                              $"{takenBook.DueDate:yyyy-MM-dd}");
-                }
-                else
-                {
-                    lines.Add($"{book.Id},{book.Title}," +
-                              $"{book.Author},{book.Publisher}," +
-                              $"{book.Year},,,");
-                }
-            }
-
-            File.WriteAllLines(filePath, lines, Encoding.UTF8);
         }
     }
 }
