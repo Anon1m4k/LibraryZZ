@@ -16,7 +16,11 @@ namespace Зимнее_задание__Библиотека_
                 Console.WriteLine("Книга не найдена.");
                 return;
             }
-
+            if (holderName == "")
+            {
+                Console.WriteLine("Введён пустой читатель.");
+                return;
+            }
             if (book is TakenBook)
             {
                 Console.WriteLine($"Книга уже взята'{holderName}'.");
